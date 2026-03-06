@@ -25,22 +25,29 @@
     "@modelcontextprotocol/sdk": "^1.26.0",
     "cors": "^2.8.5",
     "express": "^4.21.0",
-    "rendezvous-kit": "^1.17.0",
+    "rendezvous-kit": "^1.17.2",
     "zod": "^3.24.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.0.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.6",
     "@semantic-release/npm": "^13.1.4",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
     "semantic-release": "^25.0.3",
     "typescript": "^5.7.0",
     "vitest": "^4.0.18"
   },
-  "keywords": ["mcp", "meeting-point", "rendezvous", "routing", "valhalla", "l402"],
+  "keywords": [
+    "mcp",
+    "meeting-point",
+    "rendezvous",
+    "routing",
+    "valhalla",
+    "l402"
+  ],
   "author": "TheCryptoDonkey",
   "repository": {
     "type": "git",

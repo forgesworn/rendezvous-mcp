@@ -32,26 +32,3 @@ export class L402State {
     this.preimage = null
   }
 }
-
-/**
- * Parse a 402 response's WWW-Authenticate header into an L402PaymentRequired.
- * Header format: L402 macaroon="<base64>", invoice="<bolt11>"
- */
-export function parse402(wwwAuth: string, valhallaUrl: string): L402PaymentRequired | null {
-  const macMatch = wwwAuth.match(/macaroon="([^"]+)"/)
-  const invMatch = wwwAuth.match(/invoice="([^"]+)"/)
-  if (!macMatch || !invMatch) return null
-
-  const macaroon = macMatch[1]
-  const invoice = invMatch[1]
-
-  return {
-    status: 'payment_required',
-    message: 'Free tier exhausted. Pay to continue using the routing service.',
-    invoice,
-    macaroon,
-    payment_hash: '',  // filled in by caller from response body
-    payment_url: `${valhallaUrl}/invoice-status/`,
-    amount_sats: 1000,  // default, overridden from response body
-  }
-}

@@ -54,7 +54,7 @@ describe('handleScoreVenues', () => {
     expect(data.ranked_venues[0].fairness_score).toBe(13)
   })
 
-  it('returns payment_required on 402', async () => {
+  it('returns payment_required on 402 with isError', async () => {
     mockComputeRouteMatrix.mockResolvedValueOnce({
       status: 'payment_required',
       message: 'Pay up',
@@ -78,6 +78,7 @@ describe('handleScoreVenues', () => {
     expect(data.success).toBe(false)
     expect(data.status).toBe('payment_required')
     expect(data.invoice).toBe('lnbc1000...')
+    expect(result.isError).toBe(true)
   })
 
   it('auto-labels participants without labels', async () => {
@@ -131,5 +132,23 @@ describe('handleScoreVenues', () => {
     const data = JSON.parse(result.content[0].text)
     expect(data.ranked_venues).toHaveLength(1)
     expect(data.ranked_venues[0].name).toBe('Reachable')
+  })
+
+  it('returns error on network failure with isError', async () => {
+    mockComputeRouteMatrix.mockRejectedValueOnce(new Error('ECONNREFUSED'))
+
+    const result = await handleScoreVenues({
+      participants: [
+        { lat: 51.45, lon: -2.59, label: 'Alice' },
+        { lat: 51.50, lon: -0.12, label: 'Bob' },
+      ],
+      venues: [{ lat: 51.47, lon: -1.35, name: 'Pub' }],
+      transport_mode: 'drive',
+    }, mockRoutingClient)
+
+    const data = JSON.parse(result.content[0].text)
+    expect(data.success).toBe(false)
+    expect(data.error).toBe('ECONNREFUSED')
+    expect(result.isError).toBe(true)
   })
 })

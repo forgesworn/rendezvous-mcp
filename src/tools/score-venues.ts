@@ -29,76 +29,88 @@ export async function handleScoreVenues(
 
   console.error(`Scoring ${args.venues.length} venues for ${participants.length} participants (${args.transport_mode}, ${fairness})`)
 
-  const matrix = await routingClient.computeRouteMatrix(participants, venuePoints, args.transport_mode)
+  try {
+    const matrix = await routingClient.computeRouteMatrix(participants, venuePoints, args.transport_mode)
 
-  if (isPaymentRequired(matrix)) {
+    if (isPaymentRequired(matrix)) {
+      return {
+        content: [{
+          type: 'text' as const,
+          text: JSON.stringify({
+            success: false,
+            status: matrix.status,
+            message: matrix.message,
+            invoice: matrix.invoice,
+            macaroon: matrix.macaroon,
+            payment_hash: matrix.payment_hash,
+            payment_url: matrix.payment_url,
+            amount_sats: matrix.amount_sats,
+          }),
+        }],
+        isError: true as const,
+      }
+    }
+
+    // Score each venue
+    const ranked: Array<{
+      name: string
+      lat: number
+      lon: number
+      type?: string
+      travel_times: Record<string, number>
+      fairness_score: number
+    }> = []
+
+    for (let vi = 0; vi < args.venues.length; vi++) {
+      const venue = args.venues[vi]
+      const travelTimes: Record<string, number> = {}
+      const times: number[] = []
+      let reachable = true
+
+      for (let pi = 0; pi < participants.length; pi++) {
+        const entry = matrix.entries.find(
+          e => e.originIndex === pi && e.destinationIndex === vi,
+        )
+        const duration = entry?.durationMinutes ?? -1
+        if (duration < 0) {
+          reachable = false
+          break
+        }
+        const label = participants[pi].label!
+        travelTimes[label] = Math.round(duration * 10) / 10
+        times.push(duration)
+      }
+
+      if (!reachable) continue
+
+      const fairnessScore = computeFairnessScore(times, fairness)
+      ranked.push({
+        name: venue.name,
+        lat: venue.lat,
+        lon: venue.lon,
+        type: venue.type,
+        travel_times: travelTimes,
+        fairness_score: Math.round(fairnessScore * 10) / 10,
+      })
+    }
+
+    ranked.sort((a, b) => a.fairness_score - b.fairness_score)
+
     return {
       content: [{
         type: 'text' as const,
-        text: JSON.stringify({
-          success: false,
-          status: matrix.status,
-          message: matrix.message,
-          invoice: matrix.invoice,
-          macaroon: matrix.macaroon,
-          payment_hash: matrix.payment_hash,
-          payment_url: matrix.payment_url,
-          amount_sats: matrix.amount_sats,
-        }),
+        text: JSON.stringify({ success: true, ranked_venues: ranked }, null, 2),
       }],
     }
-  }
-
-  // Score each venue
-  const ranked: Array<{
-    name: string
-    lat: number
-    lon: number
-    type?: string
-    travel_times: Record<string, number>
-    fairness_score: number
-  }> = []
-
-  for (let vi = 0; vi < args.venues.length; vi++) {
-    const venue = args.venues[vi]
-    const travelTimes: Record<string, number> = {}
-    const times: number[] = []
-    let reachable = true
-
-    for (let pi = 0; pi < participants.length; pi++) {
-      const entry = matrix.entries.find(
-        e => e.originIndex === pi && e.destinationIndex === vi,
-      )
-      const duration = entry?.durationMinutes ?? -1
-      if (duration < 0) {
-        reachable = false
-        break
-      }
-      const label = participants[pi].label!
-      travelTimes[label] = Math.round(duration * 10) / 10
-      times.push(duration)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    return {
+      content: [{
+        type: 'text' as const,
+        text: JSON.stringify({ success: false, error: message }),
+      }],
+      isError: true as const,
     }
-
-    if (!reachable) continue
-
-    const fairnessScore = computeFairnessScore(times, fairness)
-    ranked.push({
-      name: venue.name,
-      lat: venue.lat,
-      lon: venue.lon,
-      type: venue.type,
-      travel_times: travelTimes,
-      fairness_score: Math.round(fairnessScore * 10) / 10,
-    })
-  }
-
-  ranked.sort((a, b) => a.fairness_score - b.fairness_score)
-
-  return {
-    content: [{
-      type: 'text' as const,
-      text: JSON.stringify({ success: true, ranked_venues: ranked }, null, 2),
-    }],
   }
 }
 

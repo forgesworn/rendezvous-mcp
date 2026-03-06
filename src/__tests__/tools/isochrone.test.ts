@@ -31,7 +31,7 @@ describe('handleGetIsochrone', () => {
     expect(data.time_minutes).toBe(15)
   })
 
-  it('returns payment_required on 402', async () => {
+  it('returns payment_required on 402 with isError', async () => {
     mockComputeIsochrone.mockResolvedValueOnce({
       status: 'payment_required',
       message: 'Pay up',
@@ -49,5 +49,19 @@ describe('handleGetIsochrone', () => {
     const data = JSON.parse(result.content[0].text)
     expect(data.success).toBe(false)
     expect(data.status).toBe('payment_required')
+    expect(result.isError).toBe(true)
+  })
+
+  it('returns error on network failure with isError', async () => {
+    mockComputeIsochrone.mockRejectedValueOnce(new Error('ECONNREFUSED'))
+
+    const result = await handleGetIsochrone({
+      lat: 51.45, lon: -2.59, transport_mode: 'drive', time_minutes: 15,
+    }, mockRoutingClient)
+
+    const data = JSON.parse(result.content[0].text)
+    expect(data.success).toBe(false)
+    expect(data.error).toBe('ECONNREFUSED')
+    expect(result.isError).toBe(true)
   })
 })

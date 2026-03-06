@@ -36,7 +36,7 @@ describe('handleGetDirections', () => {
     expect(data.geometry).toBeUndefined()
   })
 
-  it('returns payment_required on 402', async () => {
+  it('returns payment_required on 402 with isError', async () => {
     mockComputeRoute.mockResolvedValueOnce({
       status: 'payment_required',
       message: 'Pay up',
@@ -56,5 +56,36 @@ describe('handleGetDirections', () => {
     const data = JSON.parse(result.content[0].text)
     expect(data.success).toBe(false)
     expect(data.status).toBe('payment_required')
+    expect(result.isError).toBe(true)
+  })
+
+  it('returns error on network failure with isError', async () => {
+    mockComputeRoute.mockRejectedValueOnce(new Error('ETIMEDOUT'))
+
+    const result = await handleGetDirections({
+      from: { lat: 51.45, lon: -2.59 },
+      to: { lat: 51.50, lon: -0.12 },
+      transport_mode: 'drive',
+    }, mockRoutingClient)
+
+    const data = JSON.parse(result.content[0].text)
+    expect(data.success).toBe(false)
+    expect(data.error).toBe('ETIMEDOUT')
+    expect(result.isError).toBe(true)
+  })
+
+  it('handles non-Error thrown values', async () => {
+    mockComputeRoute.mockRejectedValueOnce('string error')
+
+    const result = await handleGetDirections({
+      from: { lat: 51.45, lon: -2.59 },
+      to: { lat: 51.50, lon: -0.12 },
+      transport_mode: 'drive',
+    }, mockRoutingClient)
+
+    const data = JSON.parse(result.content[0].text)
+    expect(data.success).toBe(false)
+    expect(data.error).toBe('string error')
+    expect(result.isError).toBe(true)
   })
 })

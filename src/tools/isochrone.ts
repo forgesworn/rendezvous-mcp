@@ -15,40 +15,52 @@ export async function handleGetIsochrone(
 ) {
   console.error(`Computing isochrone: ${args.time_minutes}min ${args.transport_mode} from [${args.lat},${args.lon}]`)
 
-  const result = await routingClient.computeIsochrone(
-    { lat: args.lat, lon: args.lon },
-    args.transport_mode,
-    args.time_minutes,
-  )
+  try {
+    const result = await routingClient.computeIsochrone(
+      { lat: args.lat, lon: args.lon },
+      args.transport_mode,
+      args.time_minutes,
+    )
 
-  if (isPaymentRequired(result)) {
+    if (isPaymentRequired(result)) {
+      return {
+        content: [{
+          type: 'text' as const,
+          text: JSON.stringify({
+            success: false,
+            status: result.status,
+            message: result.message,
+            invoice: result.invoice,
+            macaroon: result.macaroon,
+            payment_hash: result.payment_hash,
+            payment_url: result.payment_url,
+            amount_sats: result.amount_sats,
+          }),
+        }],
+        isError: true as const,
+      }
+    }
+
     return {
       content: [{
         type: 'text' as const,
         text: JSON.stringify({
-          success: false,
-          status: result.status,
-          message: result.message,
-          invoice: result.invoice,
-          macaroon: result.macaroon,
-          payment_hash: result.payment_hash,
-          payment_url: result.payment_url,
-          amount_sats: result.amount_sats,
-        }),
+          success: true,
+          time_minutes: result.timeMinutes,
+          transport_mode: result.mode,
+          polygon: result.polygon,
+        }, null, 2),
       }],
     }
-  }
-
-  return {
-    content: [{
-      type: 'text' as const,
-      text: JSON.stringify({
-        success: true,
-        time_minutes: result.timeMinutes,
-        transport_mode: result.mode,
-        polygon: result.polygon,
-      }, null, 2),
-    }],
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    return {
+      content: [{
+        type: 'text' as const,
+        text: JSON.stringify({ success: false, error: message }),
+      }],
+      isError: true as const,
+    }
   }
 }
 

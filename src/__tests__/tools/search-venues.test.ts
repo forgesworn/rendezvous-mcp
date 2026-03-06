@@ -37,7 +37,7 @@ describe('handleSearchVenues', () => {
     expect(mockSearchVenues).toHaveBeenCalledOnce()
   })
 
-  it('handles Overpass errors gracefully', async () => {
+  it('handles Overpass errors gracefully with isError', async () => {
     mockSearchVenues.mockRejectedValueOnce(new Error('All Overpass endpoints failed'))
 
     const result = await handleSearchVenues({
@@ -49,5 +49,21 @@ describe('handleSearchVenues', () => {
     const data = JSON.parse(result.content[0].text)
     expect(data.success).toBe(false)
     expect(data.error).toContain('Overpass')
+    expect(result.isError).toBe(true)
+  })
+
+  it('handles non-Error thrown values', async () => {
+    mockSearchVenues.mockRejectedValueOnce('unexpected failure')
+
+    const result = await handleSearchVenues({
+      lat: 51.47,
+      lon: -2.59,
+      venue_types: ['pub'],
+    })
+
+    const data = JSON.parse(result.content[0].text)
+    expect(data.success).toBe(false)
+    expect(data.error).toBe('unexpected failure')
+    expect(result.isError).toBe(true)
   })
 })
