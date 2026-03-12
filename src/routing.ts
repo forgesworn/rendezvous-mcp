@@ -6,7 +6,7 @@ import type { L402PaymentRequired } from './l402.js'
 const DEFAULT_VALHALLA_URL = 'https://routing.trotters.cc'
 
 /** Validate that a string is an HTTP(S) URL. */
-function validateUrl(url: string, label: string): string {
+export function validateUrl(url: string, label: string): string {
   let parsed: URL
   try { parsed = new URL(url) } catch {
     throw new TypeError(`${label}: invalid URL "${url}"`)

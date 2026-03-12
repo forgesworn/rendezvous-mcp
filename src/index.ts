@@ -2,7 +2,7 @@
 
 import { createRequire } from 'node:module'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { RoutingClient } from './routing.js'
+import { RoutingClient, validateUrl } from './routing.js'
 import { registerScoreVenuesTool } from './tools/score-venues.js'
 import { registerSearchVenuesTool } from './tools/search-venues.js'
 import { registerIsochroneTool } from './tools/isochrone.js'
@@ -17,6 +17,8 @@ const PORT = Math.max(1, Math.min(65535, parseInt(process.env.PORT ?? '3002', 10
 const HOST = process.env.HOST ?? '0.0.0.0'
 const VALHALLA_URL = process.env.VALHALLA_URL
 const OVERPASS_URL = process.env.OVERPASS_URL
+  ? validateUrl(process.env.OVERPASS_URL, 'OVERPASS_URL')
+  : undefined
 const CORS_ORIGIN = process.env.CORS_ORIGIN ?? '*'
 const RATE_LIMIT_MAX = Math.max(1, parseInt(process.env.RATE_LIMIT_MAX ?? '60', 10) || 60)
 const RATE_LIMIT_WINDOW = 60_000
