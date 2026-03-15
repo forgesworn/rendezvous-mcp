@@ -1,0 +1,50 @@
+# rendezvous-mcp
+
+> When people ask "where should we meet?", naive midpoint calculations ignore roads, traffic, and transport modes — making them unfair. rendezvous-mcp is an MCP server that gives AI agents the ability to find genuinely fair meeting points using real travel times, venue availability, and isochrone-based fairness algorithms.
+
+rendezvous-mcp is for developers building AI agents (Claude, ChatGPT, Cursor, or custom) that need to answer location-based meeting questions. It works out of the box with free public routing and no API keys. For production use, self-host a Valhalla routing engine for unlimited queries or use L402 Lightning micropayments for the hosted endpoint.
+
+Built as a thin MCP wrapper over [rendezvous-kit](https://github.com/TheCryptoDonkey/rendezvous-kit), the open-source TypeScript library for isochrone intersection and fairness scoring.
+
+## Getting Started
+
+Add to your MCP client config (Claude Code, Claude Desktop, Cursor, etc.):
+
+```json
+{
+  "mcpServers": {
+    "rendezvous": {
+      "command": "npx",
+      "args": ["rendezvous-mcp"]
+    }
+  }
+}
+```
+
+Then ask your AI: "Where's a fair place for Alice in London, Bob in Bristol, and Carol in Birmingham to meet for lunch?"
+
+For HTTP/SSE transport (ChatGPT, remote agents): `TRANSPORT=http npx rendezvous-mcp`
+
+## Key Concepts
+
+- **Fairness scoring** — venues are ranked by how equal travel times are across all participants, not just shortest total distance
+- **Isochrones** — reachability polygons showing everywhere reachable within N minutes by a given transport mode
+- **Transport modes** — driving, cycling, walking, and public transit affect which venues are truly accessible
+- **L402 payments** — optional Lightning micropayments for the hosted routing endpoint; self-hosted Valhalla has no payment requirement
+- **Handler extraction** — each tool is an exported `handle*()` function (testable without MCP) plus a one-liner registration
+
+## API Surface
+
+Five MCP tools:
+
+- **score_venues** — score candidate venues by travel time fairness for 2-10 participants. Returns ranked results with individual travel times and fairness scores.
+- **search_venues** — search OpenStreetMap for venues near a location by type (pub, cafe, restaurant, park, etc.)
+- **get_isochrone** — compute a reachability polygon (everywhere reachable within N minutes by a transport mode)
+- **get_directions** — get turn-by-turn directions between two points
+- **store_routing_credentials** — store L402 macaroon + preimage after Lightning payment for authenticated routing
+
+## Optional
+
+- [rendezvous-kit library](https://github.com/TheCryptoDonkey/rendezvous-kit) — the underlying TypeScript library
+- [npm package](https://www.npmjs.com/package/rendezvous-mcp) — install via npm
+- [GitHub repository](https://github.com/TheCryptoDonkey/rendezvous-mcp) — source code, issues, contributions

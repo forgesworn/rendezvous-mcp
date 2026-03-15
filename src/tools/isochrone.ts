@@ -4,6 +4,7 @@ import type { TransportMode } from 'rendezvous-kit'
 import type { RoutingClient } from '../routing.js'
 import { isPaymentRequired } from '../routing.js'
 
+/** Compute a reachability polygon showing everywhere reachable within a given travel time. */
 export async function handleGetIsochrone(
   args: {
     lat: number

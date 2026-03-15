@@ -46,7 +46,15 @@
     "rendezvous",
     "routing",
     "valhalla",
-    "l402"
+    "l402",
+    "model-context-protocol",
+    "ai",
+    "fairness",
+    "isochrone",
+    "travel-time",
+    "openstreetmap",
+    "geospatial",
+    "venue-search"
   ],
   "sideEffects": false,
   "engines": {

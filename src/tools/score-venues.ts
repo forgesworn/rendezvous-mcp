@@ -8,6 +8,7 @@ import { isPaymentRequired } from '../routing.js'
 // Extracted handler (testable without MCP server)
 // ---------------------------------------------------------------------------
 
+/** Score candidate venues by travel time fairness for multiple participants. */
 export async function handleScoreVenues(
   args: {
     participants: Array<{ lat: number; lon: number; label?: string }>

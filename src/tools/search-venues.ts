@@ -14,6 +14,7 @@ const VENUE_TYPES = [
 // Extracted handler
 // ---------------------------------------------------------------------------
 
+/** Search OpenStreetMap for venues near a location by type. */
 export async function handleSearchVenues(
   args: {
     lat: number

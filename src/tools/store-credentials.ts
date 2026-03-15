@@ -6,6 +6,7 @@ import type { RoutingClient } from '../routing.js'
 // Extracted handler (testable without MCP server)
 // ---------------------------------------------------------------------------
 
+/** Store L402 payment credentials after a Lightning invoice has been paid. */
 export async function handleStoreRoutingCredentials(
   args: {
     macaroon: string

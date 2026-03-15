@@ -4,6 +4,7 @@ import type { TransportMode } from 'rendezvous-kit'
 import type { RoutingClient } from '../routing.js'
 import { isPaymentRequired } from '../routing.js'
 
+/** Get directions between two points with distance, duration, and turn-by-turn steps. */
 export async function handleGetDirections(
   args: {
     from: { lat: number; lon: number }
