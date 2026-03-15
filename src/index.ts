@@ -16,6 +16,8 @@ const TRANSPORT = process.env.TRANSPORT ?? 'stdio'
 const PORT = Math.max(1, Math.min(65535, parseInt(process.env.PORT ?? '3002', 10) || 3002))
 const HOST = process.env.HOST ?? '0.0.0.0'
 const VALHALLA_URL = process.env.VALHALLA_URL
+  ? validateUrl(process.env.VALHALLA_URL, 'VALHALLA_URL')
+  : undefined
 const OVERPASS_URL = process.env.OVERPASS_URL
   ? validateUrl(process.env.OVERPASS_URL, 'OVERPASS_URL')
   : undefined
@@ -47,10 +49,19 @@ if (TRANSPORT === 'http') {
   )
 
   const app = express()
+
+  // Trust proxy configuration for correct client IP detection behind load balancers
+  const TRUST_PROXY = process.env.TRUST_PROXY
+  if (TRUST_PROXY) app.set('trust proxy', TRUST_PROXY === 'true' ? true : TRUST_PROXY)
+
+  if (CORS_ORIGIN === '*') {
+    console.error('Warning: CORS_ORIGIN is "*" (allows all origins). Set CORS_ORIGIN for production.')
+  }
   app.use(cors({ origin: CORS_ORIGIN }))
   app.use(express.json({ limit: '100kb' }))
 
-  // Simple in-memory rate limiter
+  // Simple in-memory rate limiter (capped to prevent memory exhaustion)
+  const RATE_LIMIT_MAP_MAX = 100_000
   const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
   const cleanupInterval = setInterval(() => {
     const now = Date.now()
@@ -65,6 +76,10 @@ if (TRANSPORT === 'http') {
     const now = Date.now()
     const entry = rateLimitMap.get(ip)
     if (!entry || now > entry.resetAt) {
+      if (rateLimitMap.size >= RATE_LIMIT_MAP_MAX) {
+        rateLimitMap.clear()
+        console.error('Rate limit map cleared: exceeded maximum entries')
+      }
       rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW })
       return next()
     }

@@ -78,14 +78,18 @@ export class RoutingClient {
     if (err instanceof ValhallaError && err.status === 402) {
       try {
         const body = JSON.parse(err.body)
+        const str = (v: unknown, max: number): string =>
+          typeof v === 'string' ? v.slice(0, max) : ''
+        const num = (v: unknown, fallback: number): number =>
+          typeof v === 'number' && Number.isFinite(v) ? v : fallback
         return {
           status: 'payment_required',
           message: 'Free tier exhausted. Pay to continue using the routing service.',
-          invoice: body.invoice ?? '',
-          macaroon: body.macaroon ?? '',
-          payment_hash: body.payment_hash ?? '',
-          payment_url: `${this.valhallaUrl}/invoice-status/${body.payment_hash ?? ''}`,
-          amount_sats: body.amount_sats ?? 1000,
+          invoice: str(body.invoice, 2048),
+          macaroon: str(body.macaroon, 4096),
+          payment_hash: str(body.payment_hash, 128),
+          payment_url: `${this.valhallaUrl}/invoice-status/${str(body.payment_hash, 128)}`,
+          amount_sats: num(body.amount_sats, 1000),
         }
       } catch {
         return {
