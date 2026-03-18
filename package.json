@@ -60,12 +60,12 @@
   "engines": {
     "node": ">=18"
   },
-  "author": "TheCryptoDonkey",
+  "author": "forgesworn",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheCryptoDonkey/rendezvous-mcp.git"
+    "url": "https://github.com/forgesworn/rendezvous-mcp.git"
   },
-  "homepage": "https://github.com/TheCryptoDonkey/rendezvous-mcp",
+  "homepage": "https://github.com/forgesworn/rendezvous-mcp",
   "funding": {
     "type": "lightning",
     "url": "https://strike.me/thedonkey"

@@ -3,7 +3,7 @@
 **Fair meeting points for AI — isochrone-based fairness, not naive midpoints.**
 
 [![npm](https://img.shields.io/npm/v/rendezvous-mcp)](https://www.npmjs.com/package/rendezvous-mcp)
-[![licence](https://img.shields.io/npm/l/rendezvous-mcp)](https://github.com/TheCryptoDonkey/rendezvous-mcp/blob/main/LICENSE)
+[![licence](https://img.shields.io/npm/l/rendezvous-mcp)](https://github.com/forgesworn/rendezvous-mcp/blob/main/LICENSE)
 ![TypeScript](https://img.shields.io/badge/TypeScript-native-blue)
 [![Nostr](https://img.shields.io/badge/Nostr-Zap%20me-purple)](https://primal.net/p/npub1mgvlrnf5hm9yf0n5mf9nqmvarhvxkc6remu5ec3vf8r0txqkuk7su0e7q2)
 
@@ -100,7 +100,7 @@ Self-hosted Valhalla has no payment requirement.
 
 ## Architecture
 
-Thin MCP wrapper over [rendezvous-kit](https://github.com/TheCryptoDonkey/rendezvous-kit) — the open-source TypeScript library for isochrone intersection, venue search, and fairness scoring. Each tool is an extracted handler function (testable without MCP) plus a registration one-liner.
+Thin MCP wrapper over [rendezvous-kit](https://github.com/forgesworn/rendezvous-kit) — the open-source TypeScript library for isochrone intersection, venue search, and fairness scoring. Each tool is an extracted handler function (testable without MCP) plus a registration one-liner.
 
 ## Development
 
@@ -112,11 +112,11 @@ npm test
 
 ## Licence
 
-[MIT](https://github.com/TheCryptoDonkey/rendezvous-mcp/blob/main/LICENSE)
+[MIT](https://github.com/forgesworn/rendezvous-mcp/blob/main/LICENSE)
 
 ## Support
 
-For issues and feature requests, see [GitHub Issues](https://github.com/TheCryptoDonkey/rendezvous-mcp/issues).
+For issues and feature requests, see [GitHub Issues](https://github.com/forgesworn/rendezvous-mcp/issues).
 
 If you find rendezvous-mcp useful, consider sending a tip:
 

@@ -4,7 +4,7 @@
 
 rendezvous-mcp is for developers building AI agents (Claude, ChatGPT, Cursor, or custom) that need to answer location-based meeting questions. It works out of the box with free public routing and no API keys. For production use, self-host a Valhalla routing engine for unlimited queries or use L402 Lightning micropayments for the hosted endpoint.
 
-Built as a thin MCP wrapper over [rendezvous-kit](https://github.com/TheCryptoDonkey/rendezvous-kit), the open-source TypeScript library for isochrone intersection and fairness scoring.
+Built as a thin MCP wrapper over [rendezvous-kit](https://github.com/forgesworn/rendezvous-kit), the open-source TypeScript library for isochrone intersection and fairness scoring.
 
 ## Getting Started
 
@@ -45,6 +45,6 @@ Five MCP tools:
 
 ## Optional
 
-- [rendezvous-kit library](https://github.com/TheCryptoDonkey/rendezvous-kit) — the underlying TypeScript library
+- [rendezvous-kit library](https://github.com/forgesworn/rendezvous-kit) — the underlying TypeScript library
 - [npm package](https://www.npmjs.com/package/rendezvous-mcp) — install via npm
-- [GitHub repository](https://github.com/TheCryptoDonkey/rendezvous-mcp) — source code, issues, contributions
+- [GitHub repository](https://github.com/forgesworn/rendezvous-mcp) — source code, issues, contributions

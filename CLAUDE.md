@@ -1,6 +1,6 @@
 # CLAUDE.md — rendezvous-mcp
 
-MCP server for AI-driven fair meeting point discovery. Thin wrapper over [rendezvous-kit](https://github.com/TheCryptoDonkey/rendezvous-kit) exposing 5 tools via the Model Context Protocol.
+MCP server for AI-driven fair meeting point discovery. Thin wrapper over [rendezvous-kit](https://github.com/forgesworn/rendezvous-kit) exposing 5 tools via the Model Context Protocol.
 
 ## Conventions
 

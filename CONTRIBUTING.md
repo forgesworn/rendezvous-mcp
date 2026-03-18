@@ -5,7 +5,7 @@ Thanks for your interest in contributing! This document covers the workflow and 
 ## Getting Started
 
 ```bash
-git clone https://github.com/TheCryptoDonkey/rendezvous-mcp.git
+git clone https://github.com/forgesworn/rendezvous-mcp.git
 cd rendezvous-mcp
 npm install
 npm test
@@ -54,4 +54,4 @@ Tests use [Vitest](https://vitest.dev/). Each tool has a corresponding `.test.ts
 
 ## Questions?
 
-Open a [GitHub Issue](https://github.com/TheCryptoDonkey/rendezvous-mcp/issues) — we're happy to help.
+Open a [GitHub Issue](https://github.com/forgesworn/rendezvous-mcp/issues) — we're happy to help.
