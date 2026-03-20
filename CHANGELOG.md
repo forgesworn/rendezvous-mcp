@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/forgesworn/rendezvous-mcp/compare/v1.0.0...v1.0.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* correct copyright to TheCryptoDonkey ([a7d78de](https://github.com/forgesworn/rendezvous-mcp/commit/a7d78de6136c65da497aab9f67c93fd1f03649b5))
+
 # 1.0.0 (2026-03-18)
 
 
