@@ -43,7 +43,7 @@ npm run test:watch    # watch mode
 npm run typecheck     # type checking only
 ```
 
-Tests use [Vitest](https://vitest.dev/). Each tool has a corresponding `.test.ts` file in `src/tools/`.
+Tests use [Vitest](https://vitest.dev/).
 
 ## Pull Requests
 
