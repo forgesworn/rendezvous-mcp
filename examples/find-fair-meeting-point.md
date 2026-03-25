@@ -8,7 +8,7 @@ Alice is in London, Bob is in Bristol, and Carol is in Birmingham. They want to 
 
 ## Step 1: Search for venues in the area between them
 
-Call `search_venues` near the geographic centre of the three cities:
+Call `search-venues` near the geographic centre of the three cities:
 
 ```json
 {
@@ -35,7 +35,7 @@ Response:
 
 ## Step 2: Score venues by fairness
 
-Call `score_venues` with participants and the candidate venues:
+Call `score-venues` with participants and the candidate venues:
 
 ```json
 {
@@ -92,7 +92,7 @@ The Plough Inn wins — the longest journey (Alice, 72.5 min) is shorter than at
 
 ## Step 3 (optional): Get directions
 
-Call `get_directions` for each participant to the chosen venue:
+Call `get-directions` for each participant to the chosen venue:
 
 ```json
 {
@@ -104,7 +104,7 @@ Call `get_directions` for each participant to the chosen venue:
 
 ## Step 4 (optional): Visualise reachability
 
-Call `get_isochrone` to show each participant's 60-minute driving range:
+Call `get-isochrone` to show each participant's 60-minute driving range:
 
 ```json
 {

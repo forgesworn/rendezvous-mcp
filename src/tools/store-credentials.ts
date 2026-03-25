@@ -35,12 +35,12 @@ export async function handleStoreRoutingCredentials(
 
 export function registerStoreCredentialsTool(server: McpServer, routingClient: RoutingClient): void {
   server.registerTool(
-    'store_routing_credentials',
+    'store-routing-credentials',
     {
       description:
         'Store L402 payment credentials (macaroon + preimage) after paying a routing invoice. ' +
         'Call this after the user has paid the Lightning invoice returned by a payment_required response. ' +
-        'Once stored, all subsequent routing calls (find_rendezvous, score_venues, get_isochrone, get_directions) ' +
+        'Once stored, all subsequent routing calls (find-rendezvous, score-venues, get-isochrone, get-directions) ' +
         'will authenticate automatically.',
       inputSchema: {
         macaroon: z.string().min(1).max(4096).regex(/^[A-Za-z0-9+/=]+$/, 'Must be valid base64')
@@ -48,6 +48,7 @@ export function registerStoreCredentialsTool(server: McpServer, routingClient: R
         preimage: z.string().min(1).max(128).regex(/^[0-9a-fA-F]+$/, 'Must be valid hex')
           .describe('The payment preimage obtained after paying the invoice'),
       },
+      annotations: { readOnlyHint: false, idempotentHint: true },
     },
     async (args) => handleStoreRoutingCredentials(args, routingClient),
   )

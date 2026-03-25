@@ -37,11 +37,11 @@ For HTTP/SSE transport (ChatGPT, remote agents): `TRANSPORT=http npx rendezvous-
 
 Five MCP tools:
 
-- **score_venues** — score candidate venues by travel time fairness for 2-10 participants. Returns ranked results with individual travel times and fairness scores.
-- **search_venues** — search OpenStreetMap for venues near a location by type (pub, cafe, restaurant, park, etc.)
-- **get_isochrone** — compute a reachability polygon (everywhere reachable within N minutes by a transport mode)
-- **get_directions** — get turn-by-turn directions between two points
-- **store_routing_credentials** — store L402 macaroon + preimage after Lightning payment for authenticated routing
+- **score-venues** — score candidate venues by travel time fairness for 2-10 participants. Returns ranked results with individual travel times and fairness scores.
+- **search-venues** — search OpenStreetMap for venues near a location by type (pub, cafe, restaurant, park, etc.)
+- **get-isochrone** — compute a reachability polygon (everywhere reachable within N minutes by a transport mode)
+- **get-directions** — get turn-by-turn directions between two points
+- **store-routing-credentials** — store L402 macaroon + preimage after Lightning payment for authenticated routing
 
 ## Optional
 

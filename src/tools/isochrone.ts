@@ -54,7 +54,7 @@ export async function handleGetIsochrone(
       }],
     }
   } catch (err) {
-    console.error('get_isochrone error:', err)
+    console.error('get-isochrone error:', err)
     const message = err instanceof Error ? err.message : 'An unexpected error occurred'
     const safeMessage = message.replace(/https?:\/\/[^\s]+/g, '[redacted-url]')
     return {
@@ -69,7 +69,7 @@ export async function handleGetIsochrone(
 
 export function registerIsochroneTool(server: McpServer, routingClient: RoutingClient): void {
   server.registerTool(
-    'get_isochrone',
+    'get-isochrone',
     {
       description:
         'Get a reachability polygon showing everywhere reachable from a point within a given travel time. ' +
@@ -80,6 +80,7 @@ export function registerIsochroneTool(server: McpServer, routingClient: RoutingC
         transport_mode: z.enum(['drive', 'cycle', 'walk']).describe('Travel mode'),
         time_minutes: z.number().min(1).max(120).describe('Maximum travel time in minutes'),
       },
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args) => handleGetIsochrone(args, routingClient),
   )

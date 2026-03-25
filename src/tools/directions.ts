@@ -57,7 +57,7 @@ export async function handleGetDirections(
       }],
     }
   } catch (err) {
-    console.error('get_directions error:', err)
+    console.error('get-directions error:', err)
     const message = err instanceof Error ? err.message : 'An unexpected error occurred'
     const safeMessage = message.replace(/https?:\/\/[^\s]+/g, '[redacted-url]')
     return {
@@ -72,7 +72,7 @@ export async function handleGetDirections(
 
 export function registerDirectionsTool(server: McpServer, routingClient: RoutingClient): void {
   server.registerTool(
-    'get_directions',
+    'get-directions',
     {
       description:
         'Get directions between two points with distance, duration, and turn-by-turn steps. ' +
@@ -88,6 +88,7 @@ export function registerDirectionsTool(server: McpServer, routingClient: Routing
         }).describe('Destination point'),
         transport_mode: z.enum(['drive', 'cycle', 'walk']).describe('Travel mode'),
       },
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args) => handleGetDirections(args, routingClient),
   )

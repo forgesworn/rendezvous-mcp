@@ -104,7 +104,7 @@ export async function handleScoreVenues(
       }],
     }
   } catch (err) {
-    console.error('score_venues error:', err)
+    console.error('score-venues error:', err)
     const message = err instanceof Error ? err.message : 'An unexpected error occurred'
     const safeMessage = message.replace(/https?:\/\/[^\s]+/g, '[redacted-url]')
     return {
@@ -138,12 +138,12 @@ function computeFairnessScore(times: number[], strategy: string): number {
 
 export function registerScoreVenuesTool(server: McpServer, routingClient: RoutingClient): void {
   server.registerTool(
-    'score_venues',
+    'score-venues',
     {
       description:
         'Score candidate venues by travel time fairness for multiple participants. ' +
         'Computes travel times from each participant to each venue and ranks by fairness strategy. ' +
-        'The AI should suggest venues (from its own knowledge or via search_venues) and pass them here for scoring.',
+        'The AI should suggest venues (from its own knowledge or via search-venues) and pass them here for scoring.',
       inputSchema: {
         participants: z.array(z.object({
           lat: z.number().min(-90).max(90).describe('Latitude'),
@@ -160,6 +160,7 @@ export function registerScoreVenuesTool(server: McpServer, routingClient: Routin
         fairness: z.enum(['min_max', 'min_total', 'min_variance']).optional()
           .describe('Scoring strategy: min_max (default, minimise longest journey), min_total (minimise total travel), min_variance (equalise travel times)'),
       },
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args) => handleScoreVenues(args, routingClient),
   )

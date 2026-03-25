@@ -11,7 +11,7 @@ No data is sent to any other service. There is no telemetry, analytics, or track
 
 ## L402 Payment Flow
 
-When the routing engine returns HTTP 402 (Payment Required), the response includes a Lightning invoice. After payment, the user stores a macaroon + preimage via `store_routing_credentials`. These credentials are held in memory only (per-session) and are never persisted to disk.
+When the routing engine returns HTTP 402 (Payment Required), the response includes a Lightning invoice. After payment, the user stores a macaroon + preimage via `store-routing-credentials`. These credentials are held in memory only (per-session) and are never persisted to disk.
 
 ## Reporting a Vulnerability
 

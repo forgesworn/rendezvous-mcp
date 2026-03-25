@@ -28,6 +28,8 @@ const RATE_LIMIT_WINDOW = 60_000
 const server = new McpServer({
   name: 'rendezvous-mcp',
   version,
+}, {
+  instructions: 'Call search-venues to find candidate venues near a location, then score-venues to rank them by travel fairness across participants. If a routing call returns payment_required, the user must pay the Lightning invoice and call store-routing-credentials with the macaroon and preimage. Use get-directions for turn-by-turn routing and get-isochrone for reachability polygons.',
 })
 
 const routingClient = new RoutingClient({
@@ -97,7 +99,7 @@ if (TRANSPORT === 'http') {
       server: 'rendezvous-mcp',
       version,
       valhalla_configured: !!VALHALLA_URL,
-      tools: ['score_venues', 'search_venues', 'get_isochrone', 'get_directions', 'store_routing_credentials'],
+      tools: ['score-venues', 'search-venues', 'get-isochrone', 'get-directions', 'store-routing-credentials'],
     })
   })
 

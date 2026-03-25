@@ -17,11 +17,11 @@ Works out of the box — free public routing, no API keys needed. Self-host Valh
 
 | Tool | Description |
 |------|-------------|
-| `score_venues` | Score candidate venues by travel time fairness for 2–10 participants |
-| `search_venues` | Search for venues near a location using OpenStreetMap |
-| `get_isochrone` | Get a reachability polygon (everywhere reachable within N minutes) |
-| `get_directions` | Get directions between two points with turn-by-turn steps |
-| `store_routing_credentials` | Store L402 macaroon + preimage after Lightning payment |
+| `score-venues` | Score candidate venues by travel time fairness for 2–10 participants |
+| `search-venues` | Search for venues near a location using OpenStreetMap |
+| `get-isochrone` | Get a reachability polygon (everywhere reachable within N minutes) |
+| `get-directions` | Get directions between two points with turn-by-turn steps |
+| `store-routing-credentials` | Store L402 macaroon + preimage after Lightning payment |
 
 ## Quick start
 
@@ -88,15 +88,15 @@ For unlimited queries with no rate limits, run your own Valhalla instance:
 
 1. User asks "Where should we meet?"
 2. AI geocodes participant locations
-3. AI calls `search_venues` to find candidate venues near the area
-4. AI calls `score_venues` with participants + candidates — returns ranked results with travel times and fairness scores
+3. AI calls `search-venues` to find candidate venues near the area
+4. AI calls `score-venues` with participants + candidates — returns ranked results with travel times and fairness scores
 5. AI presents the fairest option with travel times for each person
 
-For deeper analysis, the AI can use `get_isochrone` to visualise reachability and `get_directions` for turn-by-turn navigation.
+For deeper analysis, the AI can use `get-isochrone` to visualise reachability and `get-directions` for turn-by-turn navigation.
 
 ## L402 payments
 
-The default routing endpoint (`routing.trotters.cc`) offers free requests. When the free tier is exhausted, tools return a `payment_required` response with a Lightning invoice. After payment, call `store_routing_credentials` to store the macaroon for the session.
+The default routing endpoint (`routing.trotters.cc`) offers free requests. When the free tier is exhausted, tools return a `payment_required` response with a Lightning invoice. After payment, call `store-routing-credentials` to store the macaroon for the session.
 
 Self-hosted Valhalla has no payment requirement.
 

@@ -49,7 +49,7 @@ export async function handleSearchVenues(
       }],
     }
   } catch (err) {
-    console.error('search_venues error:', err)
+    console.error('search-venues error:', err)
     const message = err instanceof Error ? err.message : 'An unexpected error occurred'
     const safeMessage = message.replace(/https?:\/\/[^\s]+/g, '[redacted-url]')
     return {
@@ -68,7 +68,7 @@ export async function handleSearchVenues(
 
 export function registerSearchVenuesTool(server: McpServer, overpassUrl?: string): void {
   server.registerTool(
-    'search_venues',
+    'search-venues',
     {
       description:
         'Search for venues (pubs, cafes, restaurants, parks, etc.) near a location using OpenStreetMap data. ' +
@@ -81,6 +81,7 @@ export function registerSearchVenuesTool(server: McpServer, overpassUrl?: string
         venue_types: z.array(z.enum(VENUE_TYPES)).min(1)
           .describe('Venue types to search: pub, cafe, restaurant, park, library, playground, community_centre, bar, fast_food, garden, theatre, arts_centre, fitness_centre, sports_centre, escape_game, swimming_pool, service_station'),
       },
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args) => handleSearchVenues(args, overpassUrl),
   )

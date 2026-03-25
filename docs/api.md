@@ -2,7 +2,7 @@
 
 rendezvous-mcp exposes 5 MCP tools. All tools return JSON with a `success` field. On failure, `success` is `false` and an `error` message is included.
 
-## score_venues
+## score-venues
 
 Score candidate venues by travel time fairness for 2–10 participants.
 
@@ -47,7 +47,7 @@ Venues are sorted by `fairness_score` ascending (lower is fairer).
 
 ---
 
-## search_venues
+## search-venues
 
 Search OpenStreetMap for venues near a location.
 
@@ -84,7 +84,7 @@ Search OpenStreetMap for venues near a location.
 
 ---
 
-## get_isochrone
+## get-isochrone
 
 Compute a reachability polygon — everywhere reachable from a point within a given travel time.
 
@@ -115,7 +115,7 @@ The `polygon` is a GeoJSON Polygon.
 
 ---
 
-## get_directions
+## get-directions
 
 Get directions between two points with turn-by-turn steps.
 
@@ -146,7 +146,7 @@ Get directions between two points with turn-by-turn steps.
 
 ---
 
-## store_routing_credentials
+## store-routing-credentials
 
 Store L402 payment credentials after paying a Lightning invoice.
 
@@ -185,4 +185,4 @@ When the free tier is exhausted, routing tools return an error with payment deta
 }
 ```
 
-After the user pays the Lightning invoice, call `store_routing_credentials` with the `macaroon` and payment `preimage`. All subsequent routing calls authenticate automatically for the session.
+After the user pays the Lightning invoice, call `store-routing-credentials` with the `macaroon` and payment `preimage`. All subsequent routing calls authenticate automatically for the session.
