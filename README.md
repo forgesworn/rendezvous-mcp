@@ -8,6 +8,7 @@
 [![licence](https://img.shields.io/npm/l/rendezvous-mcp)](https://github.com/forgesworn/rendezvous-mcp/blob/main/LICENSE)
 ![TypeScript](https://img.shields.io/badge/TypeScript-native-blue)
 [![Nostr](https://img.shields.io/badge/Nostr-Zap%20me-purple)](https://primal.net/p/npub1mgvlrnf5hm9yf0n5mf9nqmvarhvxkc6remu5ec3vf8r0txqkuk7su0e7q2)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/TheCryptoDonkey?logo=githubsponsors&color=ea4aaa&label=Sponsor)](https://github.com/sponsors/TheCryptoDonkey)
 
 MCP server for AI-driven meeting point discovery. Give your AI the ability to answer **"where should we meet?"** using real travel times, venue availability, and fairness algorithms.
 
