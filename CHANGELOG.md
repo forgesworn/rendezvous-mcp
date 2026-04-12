@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/forgesworn/rendezvous-mcp/compare/v1.1.3...v1.1.4) (2026-04-12)
+
+
+### Bug Fixes
+
+* resolve runtime dependency vulnerabilities ([19cd561](https://github.com/forgesworn/rendezvous-mcp/commit/19cd561815e4a60b0975277e44cc8be5a027473a))
+
 ## [1.1.3](https://github.com/forgesworn/rendezvous-mcp/compare/v1.1.2...v1.1.3) (2026-04-07)
 
 

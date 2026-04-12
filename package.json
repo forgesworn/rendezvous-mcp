@@ -1,6 +1,6 @@
 {
   "name": "rendezvous-mcp",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "mcpName": "dev.forgesworn/rendezvous-mcp",
   "description": "MCP server for AI-driven fair meeting point discovery",
   "type": "module",
