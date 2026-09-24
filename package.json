@@ -71,7 +71,9 @@
   },
   "files": [
     "build",
-    "LICENSE"
+    "LICENSE",
+    "llms.txt",
+    "llms-full.txt"
   ],
   "license": "MIT"
 }
