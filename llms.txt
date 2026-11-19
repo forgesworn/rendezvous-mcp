@@ -6,6 +6,12 @@ rendezvous-mcp is for developers building AI agents (Claude, ChatGPT, Cursor, or
 
 Built as a thin MCP wrapper over [rendezvous-kit](https://github.com/forgesworn/rendezvous-kit), the open-source TypeScript library for isochrone intersection and fairness scoring.
 
+## ForgeSworn ecosystem
+
+- [ForgeSworn library guide](https://forgesworn.dev/llms.txt): Find related libraries, tools and integration guides by task and runtime.
+- [ForgeSworn on GitHub](https://github.com/forgesworn): Browse the organisation’s public repositories.
+- [Project source](https://github.com/forgesworn/rendezvous-mcp): Canonical source repository, documentation and release information.
+
 ## Getting Started
 
 Add to your MCP client config (Claude Code, Claude Desktop, Cursor, etc.):
